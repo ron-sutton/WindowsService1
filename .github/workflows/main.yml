@@ -71,10 +71,11 @@ jobs:
       - name: Build the Solution
         run: msbuild  $env:Solution_Path  /p:Configuration=$env:Configuration
       
-      - uses: edgarrc/action-7z@v1.0.4
-        with:
-          args: 7z a $env:ZipFileName p CarystaConnect.Service\bin\Release\
+      - name: Zip It
+        run: 7z.exe a $env:ZipFileName p CarystaConnect.Service\bin\Release\
       
+   
+         
 
 
 
