@@ -21,8 +21,27 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   build:
+    
+    strategy:
+      matrix:
+        targetplatform: [x86, x64]
+  
     # The type of runner that the job will run on
     runs-on: windows-latest
+
+
+
+    env:
+      App_Packages_Directory: AppPackages
+      SigningCertificate: GitHubActionsDemo.pfx
+      Solution_Path: WindowsService1.sln
+      Test_Project_Path: MyWpfApp.Tests\MyWpfApp.Tests.csproj
+      Wpf_Project_Path: MyWpfApp\MyWpfApp.csproj
+      Wap_Project_Directory: MyWpfApp.Package
+      Wap_Project_Name: MyWpfApp.Package.wapproj
+      Actions_Allow_Unsecure_Commands: true # Allows AddPAth and SetEnv commands
+
+
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -45,7 +64,7 @@ jobs:
         with:
           nuget-api-key: ${{ secrets.NuGetAPIKey }}
           nuget-version: '5.x'
-      - run: nuget restore WindowsService1.sln
+      - run: nuget restore $env:Solution_Path
         
       # Restore NuGet Packages
       #- name: Restore NuGet Packages
@@ -53,7 +72,7 @@ jobs:
         
       # Build the Solution           
       - name: Build the Solution
-        run: msbuild WindowsService1.sln /p:Configuration=Release
+        run: msbuild  $env:Solution_Path  /p:Configuration=$env:Configuration
       
    #   - uses: edgarrc/action-7z@v1.0.4
     #    with:
