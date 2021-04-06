@@ -40,7 +40,8 @@ jobs:
       Wap_Project_Directory: MyWpfApp.Package
       Wap_Project_Name: MyWpfApp.Package.wapproj
       Actions_Allow_Unsecure_Commands: true # Allows AddPAth and SetEnv commands
-
+      Configuration: Release
+      
 
 
     # Steps represent a sequence of tasks that will be executed as part of the job
