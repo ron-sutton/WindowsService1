@@ -3,3 +3,6 @@
 ################################################################################
 
 /.vs/WindowsService1/v16/.suo
+/bin/Debug
+/obj/Debug
+/packages/Newtonsoft.Json.13.0.1
