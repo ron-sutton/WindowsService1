@@ -2,6 +2,10 @@
 
 name: CI
 
+
+
+
+
 # Controls when the action will run. 
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
@@ -22,6 +26,11 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+    
+
+    
+    
+    
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
         name: Checkout Code
@@ -33,10 +42,14 @@ jobs:
       # Setup NuGet
       - name: Setup NuGet
         uses: NuGet/setup-nuget@v1.0.2
-      
+        with:
+          nuget-api-key: ${{ secrets.NuGetAPIKey }}
+          nuget-version: '5.x'
+      - run: nuget restore WindowsService1.sln
+        
       # Restore NuGet Packages
-      - name: Restore NuGet Packages
-        run: nuget restore WindowsService1.sln
+      #- name: Restore NuGet Packages
+      #  run: nuget restore WindowsService1.sln
         
       # Build the Solution           
       - name: Build the Solution
