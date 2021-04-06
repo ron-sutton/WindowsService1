@@ -76,7 +76,7 @@ jobs:
         run: msbuild  $env:Solution_Path  /p:Configuration=$env:Configuration -m
       
       - name: Zip It
-        run: 7z.exe a $env:ZipFileName p bin\Release
+        run: 7z.exe a $env:ZipFileName  bin\Release
       
    
          
