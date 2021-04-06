@@ -43,7 +43,11 @@ jobs:
       Configuration: Release
       ZipFileName: WindowsService1.zip
 
-
+    defaults:
+      run:
+        working-directory: ./mydirectory
+        
+        
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     
@@ -72,7 +76,7 @@ jobs:
         run: msbuild  $env:Solution_Path  /p:Configuration=$env:Configuration -m
       
       - name: Zip It
-        run: 7z.exe a $env:ZipFileName p WindowsService1/bin/Release/
+        run: 7z.exe a $env:ZipFileName p ./mydirectory/bin/Release/
       
    
          
