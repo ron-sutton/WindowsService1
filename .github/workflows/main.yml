@@ -41,15 +41,11 @@ jobs:
       Wap_Project_Name: MyWpfApp.Package.wapproj
       Actions_Allow_Unsecure_Commands: true # Allows AddPAth and SetEnv commands
       Configuration: Release
-      
+      ZipFileName: WindowsService1.zip
 
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    
-
-    
-    
     
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
@@ -75,9 +71,9 @@ jobs:
       - name: Build the Solution
         run: msbuild  $env:Solution_Path  /p:Configuration=$env:Configuration
       
-   #   - uses: edgarrc/action-7z@v1.0.4
-    #    with:
-     #     args: 7z a CarystaConnect.Service.zip CarystaConnect.Service\bin\Release\
+      - uses: edgarrc/action-7z@v1.0.4
+        with:
+          args: 7z a $env:ZipFileName p CarystaConnect.Service\bin\Release\
       
 
 
