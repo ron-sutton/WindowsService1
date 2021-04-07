@@ -76,13 +76,13 @@ jobs:
  #          name: published_webapp
  #          path: bin\Release
  
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v1.0.0
+      
+           
+      - name: test 
+        uses: AButler/upload-release-assets@v2.0
         with:
-           name: MyRelease
-           path: bin\Release\$env:ZipFileName
-        
- 
+          files: bin\Release\$env:ZipFileName
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
  
  
  
