@@ -28,15 +28,9 @@ jobs:
 
     env:
       App_Packages_Directory: AppPackages
-#      SigningCertificate: GitHubActionsDemo.pfx
       Solution_Path: WindowsService1.sln
-#      Test_Project_Path: MyWpfApp.Tests\MyWpfApp.Tests.csproj
-#      Wpf_Project_Path: MyWpfApp\MyWpfApp.csproj
-#      Wap_Project_Directory: MyWpfApp.Package
-#      Wap_Project_Name: MyWpfApp.Package.wapproj
       Actions_Allow_Unsecure_Commands: true # Allows AddPAth and SetEnv commands
       Configuration: Release
-      ZipFileName: WindowsService1.zip
       ZipFileNameNew: WindowsService1
       ARCHIVE_NAME: ${{ github.event.repository.name }}-${{ github.event.release.tag_name }}
   #  defaults:
@@ -72,14 +66,6 @@ jobs:
   #      run: 7z.exe a ${{env.ZipFileNameNew}}.zip   bin\Release
       
       
-      - name: Tar
-        run: tar -cvzf ${{env.ZipFileNameNew}}.tar.gz bin\release
-      
-      
-      
-      
-      
-      
       - name: Upload Zipped Artifact
         uses: actions/upload-artifact@v1.0.0
         with:
@@ -89,31 +75,24 @@ jobs:
       - name: Upload Source Artifact
         uses: actions/upload-artifact@v1.0.0
         with:
-           name: 'Source Code'
+           name: 'Source Code (zip)'
            path: .
- 
- 
-      
+       
 
- 
- 
- 
- 
- 
- 
+      - name: Create Tar Release
+        run: tar -cvzf ${{env.ZipFileNameNew}}.tar.gz bin\release
+      
+      - name: Upload Tar Artifact
+        uses: actions/upload-artifact@v1.0.0
+        with:
+           name: 'Source Code (tar.gz)'
+           path: ${{env.ZipFileNameNew}}.tar.gz
+  
     #  - name: Upload Artifact
     #    uses: actions/upload-artifact@v1.0.0
     #    with:
     #       name: Released
     #       path: '${{env.ZipFileName}}'
- 
- 
- 
- 
- 
-#      - name: clean-source
-#        run: rm  "$ARCHIVE_NAME"/.github
-      
  
       
       - name: Directory Structure
@@ -125,7 +104,6 @@ jobs:
 #          files: $env:ZipFileName
 #          repo-token: ${{ secrets.GITHUB_TOKEN }}
   
- 
     
  
  
