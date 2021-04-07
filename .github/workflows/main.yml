@@ -26,16 +26,14 @@ jobs:
     # The type of runner that the job will run on
     runs-on: windows-latest
 
-
-
     env:
       App_Packages_Directory: AppPackages
-      SigningCertificate: GitHubActionsDemo.pfx
+#      SigningCertificate: GitHubActionsDemo.pfx
       Solution_Path: WindowsService1.sln
-      Test_Project_Path: MyWpfApp.Tests\MyWpfApp.Tests.csproj
-      Wpf_Project_Path: MyWpfApp\MyWpfApp.csproj
-      Wap_Project_Directory: MyWpfApp.Package
-      Wap_Project_Name: MyWpfApp.Package.wapproj
+#      Test_Project_Path: MyWpfApp.Tests\MyWpfApp.Tests.csproj
+#      Wpf_Project_Path: MyWpfApp\MyWpfApp.csproj
+#      Wap_Project_Directory: MyWpfApp.Package
+#      Wap_Project_Name: MyWpfApp.Package.wapproj
       Actions_Allow_Unsecure_Commands: true # Allows AddPAth and SetEnv commands
       Configuration: Release
       ZipFileName: WindowsService1.zip
@@ -81,19 +79,6 @@ jobs:
            name: published_webapp
            path: bin\Release
          
-  generate:
-   name: Create release-artifacts
-   runs-on: ubuntu-latest
-   steps:
-      - name: Checkout the repository
-        uses: actions/checkout@master
-      - name: Generate the artifacts
-        uses: skx/github-action-build@master
-      - name: Upload the artifacts
-        uses: skx/github-action-publish-binaries@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          args: 'example-*'
+ 
 
 
