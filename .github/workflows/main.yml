@@ -3,9 +3,6 @@
 name: CI
 
 
-
-
-
 # Controls when the action will run. 
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
@@ -84,6 +81,19 @@ jobs:
            name: published_webapp
            path: bin\Release
          
-
+  generate:
+   name: Create release-artifacts
+   runs-on: ubuntu-latest
+   steps:
+      - name: Checkout the repository
+        uses: actions/checkout@master
+      - name: Generate the artifacts
+        uses: skx/github-action-build@master
+      - name: Upload the artifacts
+        uses: skx/github-action-publish-binaries@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          args: 'example-*'
 
 
