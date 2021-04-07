@@ -100,7 +100,7 @@ jobs:
           body: New release for ${{ github.ref }}
           draft: false
           prerelease: false
-  
+          allowUpdates: true
  
       - name: Upload Release Asset
         id: upload-release-asset
