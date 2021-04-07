@@ -71,6 +71,15 @@ jobs:
   #    - name: Zip It
   #      run: 7z.exe a ${{env.ZipFileNameNew}}.zip   bin\Release
       
+      
+      - name: Tar
+        run: tar -cvzf ${{env.ZipFileNameNew}}.tar.gz bin\release
+      
+      
+      
+      
+      
+      
       - name: Upload Zipped Artifact
         uses: actions/upload-artifact@v1.0.0
         with:
@@ -82,6 +91,15 @@ jobs:
         with:
            name: 'Source Code'
            path: .
+ 
+ 
+      
+
+ 
+ 
+ 
+ 
+ 
  
     #  - name: Upload Artifact
     #    uses: actions/upload-artifact@v1.0.0
