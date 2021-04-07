@@ -78,7 +78,7 @@ jobs:
  
       
       - name: unzip-source
-        run: dir && dir \Bin\Release
+        run: dir && dir bin\Release
             
       - name: test 
         uses: AButler/upload-release-assets@v2.0
