@@ -5,14 +5,80 @@ on:
     tags:
     - '*'
 
-jobs:
 
+jobs:
+  # This workflow contains a single job called "build"
   build:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        targetplatform: [AnyCPU] #targetplatform: [x86, x64]
+  
+    # The type of runner that the job will run on
+    runs-on: windows-latest
+
+    env:
+      App_Packages_Directory: AppPackages
+      Solution_Path: WindowsService1.sln
+      Actions_Allow_Unsecure_Commands: true # Allows AddPAth and SetEnv commands
+      Configuration: Release
+      ZipFileNameNew: WindowsService1
+      ARCHIVE_NAME: ${{ github.event.repository.name }}-${{ github.event.release.tag_name }}
+        
+        
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    - uses: actions/checkout@v1
-    - uses: ncipollo/release-action@v1
-      with:
-        artifacts: "*.*"
-        allowUpdates: true
-        token: ${{ secrets.GITHUB_TOKEN }}
+    
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+        name: Checkout Code
+      
+      # Setup Msbuild
+      - name: setup-msbuild
+        uses: microsoft/setup-msbuild@v1
+      
+      # Setup NuGet and Restore Packages
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v1.0.2
+        with:
+          nuget-api-key: ${{ secrets.NuGetAPIKey }}
+          nuget-version: '5.x'
+      - run: nuget restore $env:Solution_Path
+        
+        
+      # Build the Solution           
+      - name: Build the Solution
+        run: msbuild  $env:Solution_Path  /p:Configuration=$env:Configuration -m
+      
+
+      - name: Create Tar Release
+        run: tar -cvzf ${{env.ZipFileNameNew}}.tar.gz bin\release
+      
+  
+      - name: Create Zip Release
+        run:  7z a -tzip ${{env.ZipFileNameNew}}.zip bin\release
+ 
+      - name: Publish
+        uses: softprops/action-gh-release@v1
+        with:
+          files: "${{env.ZipFileNameNew}}*"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+ 
+
+
+
+
+
+
+
+
+#jobs:
+#  build:
+#    runs-on: ubuntu-latest
+#    steps:
+#    - uses: actions/checkout@v1
+#    - uses: ncipollo/release-action@v1
+#      with:
+#        artifacts: "*.*"
+#        allowUpdates: true
+#        token: ${{ secrets.GITHUB_TOKEN }}
