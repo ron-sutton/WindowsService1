@@ -83,7 +83,7 @@ jobs:
  
       
       - name: Directory Structure
-        run: dir && dir bin\Release  && dir .github
+        run: dir && dir bin\Release  && dir .github\workflows
             
       - name: test 
         uses: AButler/upload-release-assets@v2.0
