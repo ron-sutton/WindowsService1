@@ -77,12 +77,12 @@ jobs:
  #          path: bin\Release
  
  
-      - name: clean-source
-        run: rm  "$ARCHIVE_NAME"/.github
+#      - name: clean-source
+#        run: rm  "$ARCHIVE_NAME"/.github
       
  
       
-      - name: unzip-source
+      - name: Directory Structure
         run: dir && dir bin\Release
             
       - name: test 
