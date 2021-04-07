@@ -37,7 +37,7 @@ jobs:
       Actions_Allow_Unsecure_Commands: true # Allows AddPAth and SetEnv commands
       Configuration: Release
       ZipFileName: WindowsService1.zip
-
+      ARCHIVE_NAME: ${{ github.event.repository.name }}-${{ github.event.release.tag_name }}
   #  defaults:
    #   run:
     #    working-directory: ./mydirectory
