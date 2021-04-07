@@ -54,7 +54,7 @@ jobs:
       - name: setup-msbuild
         uses: microsoft/setup-msbuild@v1
       
-      # Setup NuGet
+      # Setup NuGet and Restore Packages
       - name: Setup NuGet
         uses: NuGet/setup-nuget@v1.0.2
         with:
@@ -62,9 +62,6 @@ jobs:
           nuget-version: '5.x'
       - run: nuget restore $env:Solution_Path
         
-      # Restore NuGet Packages
-      #- name: Restore NuGet Packages
-      #  run: nuget restore WindowsService1.sln
         
       # Build the Solution           
       - name: Build the Solution
@@ -79,6 +76,37 @@ jobs:
            name: published_webapp
            path: bin\Release
          
+ 
+ 
+ 
+ 
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: New release for ${{ github.ref }}
+          draft: false
+          prerelease: false
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: bin\Release\published_webapp.zip
+          asset_name: published_webapp.zip
+          asset_content_type: application/zip
+ 
+ 
+ 
+ 
+ 
+ 
  
 
 
