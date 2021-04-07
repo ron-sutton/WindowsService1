@@ -50,9 +50,7 @@ jobs:
         run: msbuild  $env:Solution_Path  /p:Configuration=$env:Configuration -m
       
 
-      - name: Create Tar Release
-        run: tar -cvzf ${{env.ZipFileNameNew}}.tar.gz bin\release
-      
+   
   
       - name: Create Zip Release
         run:  7z a -tzip ${{env.ZipFileNameNew}}.zip bin\release
@@ -62,7 +60,7 @@ jobs:
         with:
           files: | 
                    ${{env.ZipFileNameNew}}.zip 
-                   ${{env.ZipFileNameNew}}.tar.gz
+                   
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
  
