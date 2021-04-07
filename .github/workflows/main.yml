@@ -81,7 +81,7 @@ jobs:
       - name: test 
         uses: AButler/upload-release-assets@v2.0
         with:
-          files: bin\Release\$env:ZipFileName
+          files: $env:ZipFileName
           repo-token: ${{ secrets.GITHUB_TOKEN }}
  
  
